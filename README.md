@@ -12,3 +12,5 @@ File 1: segmentation
 - separate voicing (v) and tone (t), for each character
 
 File 2: Descriptives and plot
+
+Data Repository: 10.5522/04/26504347

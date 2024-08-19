@@ -2,7 +2,7 @@
 # this is to capture how specific the romanised information captures
 # add simplified chinese for comparison - doesn't make a difference here.
 
-
+import matplotlib.pyplot as plt
 import pandas as pd
 df = pd.read_csv("data/20240806_cleandata.csv")
 unique_counts = df.nunique() # some chi characters not loaded properly. Inspect using CSV is more accurate.
@@ -46,23 +46,32 @@ pin_counts = df['pin_tone'].value_counts()
 pin_counts.to_csv('pin_count.csv')
 
 
-# plot
-import matplotlib.pyplot as plt
-
 jyut_counts = df['jyut_tone'].value_counts().nlargest(10)
 pin_counts = df['pin_tone'].value_counts().nlargest(10)
 
-# Plotting
-plt.figure(figsize=(12, 6))
-plt.plot(jyut_counts.index, jyut_counts, label='Jyutping Tone Count', marker='o')
-plt.plot(pin_counts.index, pin_counts, label='Pinyin Tone Count', marker='o')
+# Create subplots
+fig, axs = plt.subplots(1, 2, figsize=(16, 6))
 
-# Adding labels and title
-plt.xlabel('Index')
-plt.ylabel('Count')
-plt.title('10 most common Jyutping and Pinyin Tone Count')
-plt.legend()
-plt.grid(True)
+# Plot for Jyutping Tone Count
+axs[0].plot(jyut_counts.index, jyut_counts, label='Jyutping Tone Count', marker='o')
+axs[0].set_xlabel('10 most common tone combinations')
+axs[0].set_ylabel('Count')
+axs[0].set_title('Jyutping')
+axs[0].legend()
+axs[0].grid(True)
+
+# Plot for Pinyin Tone Count
+axs[1].plot(pin_counts.index, pin_counts, label='Pinyin Tone Count', marker='o', color = 'orange')
+axs[1].set_xlabel('10 most common tone combinations')
+axs[1].set_ylabel('Count')
+axs[1].set_title('Pinyin')
+axs[1].legend()
+axs[1].grid(True)
+
+# Adjust layout
+plt.tight_layout()
 
 # Show plot
 plt.show()
+
+
